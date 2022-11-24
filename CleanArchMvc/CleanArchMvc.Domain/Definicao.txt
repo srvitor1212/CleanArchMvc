@@ -1,0 +1,4 @@
+﻿A camada de Domain (Domínio)
+é responsável por representar conceitos do negócio.
+
+Informações sobre a situação do negócio e regras de negócio.
