@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace CleanArchMvc.Domain.Entities
 {
     // sealed não pode ser herdada
-    public sealed class Category
+    public sealed class Category : Base
     {
-        public int Id { get; private set; }
         public string Name { get; private set; }
 
         // 1:N de Product
