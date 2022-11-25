@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanArchMvc.Domain.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,71 @@ namespace CleanArchMvc.Domain.Entities
         public string Image { get; private set; }
 
         // 1:1 de Category
-        public int CategoryId { get; private set; }
-        public Category Category { get; private set; }
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
+
+        // Construtores
+        public Product(string name, string description,
+            decimal price, int stock, string image)
+        {
+            ValidateDomain(name, description, price, stock, image);
+        }
+
+        public Product(int id, string name, string description,
+            decimal price, int stock, string image)
+        {
+            DomainExceptionValidation.When(id < 0,
+                "Id inválido");
+            this.Id = id;
+            ValidateDomain(name, description, price, stock, image);
+        }
+
+
+        // Setter
+        public Product(string name, string description,
+            decimal price, int stock, string image, int categoryId)
+        {
+            ValidateDomain(name, description, price, stock, image);
+            this.CategoryId = categoryId;
+        }
+
+
+        // Validações
+        private void ValidateDomain(string name, string description,
+            decimal price, int stock, string image)
+        {
+            // name
+            DomainExceptionValidation.When(string.IsNullOrEmpty(name),
+                "Nome inválido. Nome é obrigatório");
+
+            DomainExceptionValidation.When(name.Length < 3,
+                "Nome inválido. Minimo de 3 caracteres");
+
+            // description
+            DomainExceptionValidation.When(string.IsNullOrEmpty(description),
+                "Nome inválido. Nome é obrigatório");
+
+            DomainExceptionValidation.When(Description.Length < 5,
+                "Nome inválido. Minimo de 5 caracteres");
+
+            // price
+            DomainExceptionValidation.When(price < 0,
+                "Preço inválido");
+
+            // stock
+            DomainExceptionValidation.When(stock < 0,
+                "Estoque inválido");
+
+            // image
+            DomainExceptionValidation.When(image.Length > 250,
+                "Nome da imagem muito longo, máximo de 250");
+
+            this.Name = name;
+            this.Description = description;
+            this.Price = price;
+            this.Stock = stock;
+            this.Image = image;
+        }
     }
 }
