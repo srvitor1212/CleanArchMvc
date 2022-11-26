@@ -39,7 +39,7 @@ namespace CleanArchMvc.Domain.Entities
 
 
         // Setter
-        public Product(string name, string description,
+        public void Update(string name, string description,
             decimal price, int stock, string image, int categoryId)
         {
             ValidateDomain(name, description, price, stock, image);
@@ -60,10 +60,10 @@ namespace CleanArchMvc.Domain.Entities
 
             // description
             DomainExceptionValidation.When(string.IsNullOrEmpty(description),
-                "Nome inválido. Nome é obrigatório");
+                "Descrição inválida. Nome é obrigatório");
 
-            DomainExceptionValidation.When(Description.Length < 5,
-                "Nome inválido. Minimo de 5 caracteres");
+            DomainExceptionValidation.When(description.Length < 5,
+                "Descrição inválida. Minimo de 5 caracteres");
 
             // price
             DomainExceptionValidation.When(price < 0,
