@@ -60,7 +60,7 @@ namespace CleanArchMvc.Domain.Entities
 
             // description
             DomainExceptionValidation.When(string.IsNullOrEmpty(description),
-                "Descrição inválida. Nome é obrigatório");
+                "Descrição inválida. Descrição é obrigatória");
 
             DomainExceptionValidation.When(description.Length < 5,
                 "Descrição inválida. Minimo de 5 caracteres");

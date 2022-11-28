@@ -1,4 +1,3 @@
-using CleanArchMvc.Domain;
 using CleanArchMvc.Domain.Entities;
 using FluentAssertions;
 using Xunit;
