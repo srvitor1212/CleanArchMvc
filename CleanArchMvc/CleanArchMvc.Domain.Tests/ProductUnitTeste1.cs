@@ -113,5 +113,13 @@ namespace CleanArchMvc.Domain.Tests
                 .WithMessage("Nome da imagem muito longo, máximo de 250");
         }
 
+        [Fact]
+        public void CreateProduct_NullImageName()
+        {
+            Action action = () => new Product(1, "Product Name", "Product description", 9.99m, 99, null);
+            action.Should()
+                .NotThrow<CleanArchMvc.Domain.Validation.DomainExceptionValidation>();
+        }
+
     }
 }

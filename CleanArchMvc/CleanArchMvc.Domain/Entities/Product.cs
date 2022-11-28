@@ -74,7 +74,7 @@ namespace CleanArchMvc.Domain.Entities
                 "Estoque inválido");
 
             // image
-            DomainExceptionValidation.When(image.Length > 250,
+            DomainExceptionValidation.When(image?.Length > 250, // com o operador ? pode retornar null, e não mais uma exception
                 "Nome da imagem muito longo, máximo de 250");
 
             this.Name = name;
