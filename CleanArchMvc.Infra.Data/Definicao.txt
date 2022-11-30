@@ -1,0 +1,7 @@
+A camada de Infraestrutura é a camada mais externa da arquitetura que lida com as necessidades de infra e fornece a implementação de suas interfaces de repositório (acesso a dados).
+
+É aonde nos conectamos com o Banco de dados ou chamadas de serviços. Só a cama de infra sabe como acessar o banco e qual tecnologia é usada (Entity Framework, ADO.NET etc.)
+
+Somente nessa camada é instalado
+EntityFramworkCore.SqlServer
+EntityFramworkCore.Design
