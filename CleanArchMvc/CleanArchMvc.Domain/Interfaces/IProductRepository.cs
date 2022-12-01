@@ -14,7 +14,7 @@ namespace CleanArchMvc.Domain.Interfaces
         // UmaListaDe<Produtos>
         Task<IEnumerable<Product>> GetProductsAsync();
         Task<Product> GetByIdAsync(int? id);
-        Task<IEnumerable<Product>> GetProductCategoryAsync();
+        Task<Product> GetProductCategoryAsync(int? id);
 
         Task<Product> CreateAsync(Product product);
         Task<Product> UpdateAsync(Product product);
