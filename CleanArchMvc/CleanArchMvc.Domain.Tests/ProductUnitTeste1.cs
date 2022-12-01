@@ -93,10 +93,11 @@ namespace CleanArchMvc.Domain.Tests
         }
 
         // stock
-        [Fact]
-        public void CreateProduct_NegativeStock()
+        [Theory]
+        [InlineData(-5)]
+        public void CreateProduct_NegativeStock(int value)
         {
-            Action action = () => new Product(1, "Product Name", "Product description", 9.99m, -99, "prod image");
+            Action action = () => new Product(1, "Product Name", "Product description", 9.99m, value, "prod image");
             action.Should()
                 .Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Estoque inválido");
@@ -110,6 +111,14 @@ namespace CleanArchMvc.Domain.Tests
             action.Should()
                 .Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>()
                 .WithMessage("Nome da imagem muito longo, máximo de 250");
+        }
+
+        [Fact]
+        public void CreateProduct_NullImageName()
+        {
+            Action action = () => new Product(1, "Product Name", "Product description", 9.99m, 99, null);
+            action.Should()
+                .NotThrow<CleanArchMvc.Domain.Validation.DomainExceptionValidation>();
         }
 
     }
