@@ -19,12 +19,14 @@ namespace CleanArchMvc.Application.Services
 
         public async Task<IEnumerable<CategoryDTO>> GetCategories()
         {
-            throw new NotImplementedException();
+            var categoriesEntity = await _categoryRepository.GetCategoriesAsync();
+            return _mapper.Map<IEnumerable<CategoryDTO>>(categoriesEntity);
         }
 
         public async Task<CategoryDTO> GetById(int id)
         {
-            throw new NotImplementedException();
+            var categoryEntity = await _categoryRepository.GetByIdAsync(id);
+            return _mapper.Map<CategoryDTO>(categoryEntity);
         }
 
         public async Task Add(CategoryDTO categoryDTO)
