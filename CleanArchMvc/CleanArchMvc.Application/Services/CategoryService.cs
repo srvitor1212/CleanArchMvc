@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using CleanArchMvc.Domain.Entities;
 using CleanArchMvc.Domain.Interfaces;
 
 namespace CleanArchMvc.Application.Services
@@ -31,17 +32,20 @@ namespace CleanArchMvc.Application.Services
 
         public async Task Add(CategoryDTO categoryDTO)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _mapper.Map<Category>(categoryDTO);
+            await _categoryRepository.CreateAsync(categoryEntity);
         }
 
         public async Task Update(CategoryDTO categoryDTO)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _mapper.Map<Category>(categoryDTO);
+            await _categoryRepository.UpdateAsync(categoryEntity);
         }
 
         public async Task Remove(int? id)
         {
-            throw new NotImplementedException();
+            var categoryEntity = _categoryRepository.GetByIdAsync(id).Result;
+            await _categoryRepository.RemoveAsync(categoryEntity);
         }
     }
 }
