@@ -14,6 +14,7 @@ namespace CleanArchMvc.Application.Services
 
         public ProductService(IMapper mapper, IProductRepository productRepository)
         {
+            _mapper = mapper;
             _productRepository = productRepository ??
                 throw new ArgumentNullException(nameof(productRepository));
         }
