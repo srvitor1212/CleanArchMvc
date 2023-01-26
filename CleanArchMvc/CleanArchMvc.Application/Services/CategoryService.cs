@@ -18,6 +18,7 @@ namespace CleanArchMvc.Application.Services
             _categoryRepository = categoryRepository;
         }
 
+
         public async Task<IEnumerable<CategoryDTO>> GetCategories()
         {
             var categoriesEntity = await _categoryRepository.GetCategoriesAsync();
