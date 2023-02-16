@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using CleanArchMvc.Application.Products.Commands;
 using CleanArchMvc.Application.Products.Queries;
 using MediatR;
 
@@ -56,13 +57,14 @@ namespace CleanArchMvc.Application.Services
 
         public async Task Add(ProductDTO productDTO)
         {
-            //var productCreateCommand = 
+            var productCreateCommand = _mapper.Map<ProductCreateCommand>(productDTO);
+            await _mediator.Send(productCreateCommand);
         }
 
         public async Task Update(ProductDTO productDTO)
         {
-            var productEntity = _mapper.Map<Product>(productDTO);
-            await _productRepository.UpdateAsync(productEntity);
+            var productUpdateCommand = _mapper.Map<ProductCreateCommand>(productDTO);
+            await _mediator.Send(productUpdateCommand);
         }
 
         public async Task Remove(int? id)
