@@ -69,8 +69,11 @@ namespace CleanArchMvc.Application.Services
 
         public async Task Remove(int? id)
         {
-            var productEntity = _productRepository.GetByIdAsync(id).Result;
-            await _productRepository.RemoveAsync(productEntity);
+            var productRemoveCommand = _mapper.Map<ProductRemoveCommand>(id.Value);
+            if (productRemoveCommand == null)
+                throw new Exception($"Entidade não pode ser carregada");
+
+            await _mediator.Send(productRemoveCommand);
         }
 
     }
