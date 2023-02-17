@@ -5,7 +5,7 @@ namespace CleanArchMvc.Application.DTOs
 {
     public class CategoryDTO
     {
-        public int Id { get; protected set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "O nome é obrigatório")]
         [MinLength(3, ErrorMessage = "Tamanho mínimo de 3")]
