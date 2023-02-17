@@ -8,9 +8,9 @@ namespace CleanArchMvc.Application.DTOs
         public int Id { get; protected set; }
 
         [Required(ErrorMessage = "O nome é obrigatório")]
-        [MinLength(3)]
-        [MaxLength(100)]
+        [MinLength(3, ErrorMessage = "Tamanho mínimo de 3")]
+        [MaxLength(100, ErrorMessage = "Tamanho máximo de 100")]
         [DisplayName("Nome")]
-        public string Name { get; private set; }
+        public string Name { get; set; }
     }
 }
