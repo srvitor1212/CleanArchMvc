@@ -19,5 +19,19 @@ namespace CleanArchMvc.WebUI.Controllers
             var categories = await _categoryService.GetCategories();
             return View(categories);
         }
+
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        /*
+        [HttpPost]
+        public async Task<IActionResult> Create()
+        {
+
+        }
+        */
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace CleanArchMvc.Application.DTOs
 {
@@ -9,6 +10,7 @@ namespace CleanArchMvc.Application.DTOs
         [Required(ErrorMessage = "O nome é obrigatório")]
         [MinLength(3)]
         [MaxLength(100)]
+        [DisplayName("Nome")]
         public string Name { get; private set; }
     }
 }
