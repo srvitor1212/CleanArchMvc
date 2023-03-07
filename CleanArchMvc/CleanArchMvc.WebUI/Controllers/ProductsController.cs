@@ -9,11 +9,15 @@ namespace CleanArchMvc.WebUI.Controllers
     {
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsController(IProductService productService, ICategoryService categoryService)
+        public ProductsController(  IProductService productService, 
+                                    ICategoryService categoryService,
+                                    IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
 
@@ -23,7 +27,6 @@ namespace CleanArchMvc.WebUI.Controllers
             var products = await _productService.GetProducts();
             return View(products);
         }
-
 
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -61,6 +64,7 @@ namespace CleanArchMvc.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductDTO produtoDTO)
         {
+            //todo: Não ta salvando
             if (ModelState.IsValid)
             {
                 await _productService.Update(produtoDTO);
@@ -85,6 +89,21 @@ namespace CleanArchMvc.WebUI.Controllers
             if (id == null) return NotFound();
             await _productService.Remove(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+            var produtoDTO = await _productService.GetById(id);
+            if (produtoDTO == null) return NotFound();
+
+            var wwwroot = _webHostEnvironment.WebRootPath;
+            var image = Path.Combine(wwwroot, "images\\" + produtoDTO.Image);
+            var exists = System.IO.File.Exists(image);
+            ViewBag.ImageExist = exists;
+
+            return View(produtoDTO);
         }
 
     }
