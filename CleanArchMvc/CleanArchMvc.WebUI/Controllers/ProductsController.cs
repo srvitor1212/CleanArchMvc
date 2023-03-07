@@ -58,5 +58,16 @@ namespace CleanArchMvc.WebUI.Controllers
 
             return View(productDTO);
         }
+        [HttpPost]
+        public async Task<IActionResult> Edit(ProductDTO produtoDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                await _productService.Update(produtoDTO);
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View();
+        }
     }
 }
