@@ -41,9 +41,9 @@ namespace CleanArchMvc.Infra.Data.Identity
             return result.Succeeded;
         }
 
-        public Task Logout()
+        public async Task Logout()
         {
-            throw new NotImplementedException();
+            await _signInManager.SignOutAsync();
         }
     }
 }
