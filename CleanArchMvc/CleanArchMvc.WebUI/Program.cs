@@ -34,6 +34,7 @@ using (var serviceScope = app.Services.CreateScope())
     seedUserRoleInitial.SeedUsers();
 }
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
