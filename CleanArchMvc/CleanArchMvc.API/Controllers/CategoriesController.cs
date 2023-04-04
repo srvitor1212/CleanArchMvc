@@ -19,23 +19,30 @@ namespace CleanArchMvc.API.Controllers
         {
             var categories = await _categoryService.GetCategories();
             if(categories == null)
-            {
                 return NotFound("Não foram encontrados Categorias!");
-            }
 
             return Ok(categories);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CategoryDTO>> GetById(int id)
+        [HttpGet("{id}", Name = "GetCategory")]
+        public async Task<ActionResult<CategoryDTO>> Get(int id)
         {
             var category = await _categoryService.GetById(id);
             if(category == null)
-            {
                 return NotFound("Categoria " + id + " não encontrada");
-            }
             
             return Ok(category);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] CategoryDTO categoryDTO)
+        {
+            if(categoryDTO == null)
+                return BadRequest("Dados inválidos");
+
+            await _categoryService.Add(categoryDTO);
+
+            return new CreatedAtRouteResult("GetCategory", new {id = categoryDTO.Id}, categoryDTO);
         }
     }
 }
