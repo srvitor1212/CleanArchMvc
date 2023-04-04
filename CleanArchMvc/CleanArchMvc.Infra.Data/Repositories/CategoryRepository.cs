@@ -16,7 +16,8 @@ namespace CleanArchMvc.Infra.Data.Repositories
 
         public async Task<Category> CreateAsync(Category category)
         {
-            // Ainda dica em memória
+            //exemplo_caminho=2
+            // Ainda fica em memória
             _context.Add(category);
 
             // Grava em disco

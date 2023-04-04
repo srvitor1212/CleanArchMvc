@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -11,9 +12,9 @@ namespace CleanArchMvc.WebUI.Controllers
         private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductsController(  IProductService productService, 
-                                    ICategoryService categoryService,
-                                    IWebHostEnvironment webHostEnvironment)
+        public ProductsController(IProductService productService,
+                                  ICategoryService categoryService,
+                                  IWebHostEnvironment webHostEnvironment)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -64,7 +65,6 @@ namespace CleanArchMvc.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductDTO produtoDTO)
         {
-            //todo: Não ta salvando
             if (ModelState.IsValid)
             {
                 await _productService.Update(produtoDTO);
@@ -76,6 +76,7 @@ namespace CleanArchMvc.WebUI.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -85,6 +86,7 @@ namespace CleanArchMvc.WebUI.Controllers
 
             return View(produtoDTO);
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost(), ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
