@@ -59,7 +59,7 @@ namespace CleanArchMvc.WebUI.Controllers
             }
             else
             {
-                ModelState.AddModelError(string.Empty, "Não foi possível registrar-se");
+                ModelState.AddModelError(string.Empty, "Não foi possível registrar-se. A senha deve atender as políticas");
                 return View(model);
             }
         }
