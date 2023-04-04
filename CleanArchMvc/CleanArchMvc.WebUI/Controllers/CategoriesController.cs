@@ -34,7 +34,7 @@ namespace CleanArchMvc.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                await _categoryService.Add(category);
+                await _categoryService.Add(category); //exemplo_caminho=0
                 return RedirectToAction("Index");
             }
             return View(category);
