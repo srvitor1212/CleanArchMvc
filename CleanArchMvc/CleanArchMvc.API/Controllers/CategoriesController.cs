@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.API.Controllers
 {
@@ -6,6 +7,10 @@ namespace CleanArchMvc.API.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-
+        private readonly ICategoryService _categoryService;
+        public CategoriesController(ICategoryService categoryService)
+        {
+            this._categoryService = categoryService;
+        }
     }
 }
