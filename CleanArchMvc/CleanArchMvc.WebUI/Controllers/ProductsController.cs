@@ -64,7 +64,6 @@ namespace CleanArchMvc.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductDTO produtoDTO)
         {
-            //todo: Não ta salvando
             if (ModelState.IsValid)
             {
                 await _productService.Update(produtoDTO);
