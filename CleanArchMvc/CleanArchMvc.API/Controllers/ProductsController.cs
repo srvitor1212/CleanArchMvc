@@ -1,8 +1,6 @@
 ﻿using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.API.Controllers
 {
@@ -12,7 +10,7 @@ namespace CleanArchMvc.API.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
-       public ProductsController(IProductService productService)
+        public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
