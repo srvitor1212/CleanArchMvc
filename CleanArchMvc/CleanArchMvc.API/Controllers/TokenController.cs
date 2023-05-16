@@ -12,14 +12,25 @@ namespace CleanArchMvc.API.Controllers
 
         public TokenController(IAuthenticate authenticate)
         {
-            _authenticate = authenticate ?? 
+            _authenticate = authenticate ??
                 throw new ArgumentNullException(nameof(authenticate));
         }
 
         [HttpPost("LoginUser")]
-        public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel model)
+        public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
-            throw new NotImplementedException();
+            var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
+            if (result)
+            {
+                //todo: return GenerateToken(userInfo);
+                return Ok($"Usuário {userInfo.Email} logou com sucesso!");
+            } else
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    "Credenciais inválidas");
+                return BadRequest();
+            }
         }
     }
 }
