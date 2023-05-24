@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 
 namespace CleanArchMvc.API.Controllers
 {
@@ -29,8 +30,7 @@ namespace CleanArchMvc.API.Controllers
             var result = await _authenticate.Authenticate(userInfo.Email, userInfo.Password);
             if (result)
             {
-                //todo: return GenerateToken(userInfo);
-                return Ok($"Usuário {userInfo.Email} logou com sucesso!");
+                return GenerateToken(userInfo);
             } else
             {
                 ModelState.AddModelError(
@@ -42,6 +42,7 @@ namespace CleanArchMvc.API.Controllers
 
         private UserToken GenerateToken(LoginModel userInfo)
         {
+            //PAYLOAD
             var claims = new[]
             {
                 new Claim("email", userInfo.Email),
@@ -49,8 +50,32 @@ namespace CleanArchMvc.API.Controllers
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             };
 
-            //todo: parei aqui
-            //var chaveSecreta = new SymmetricSecurityKey()
+            //CHAVE SECRETA
+            var chaveSecreta = _configuration["Jwt:SecretKey"];
+            var encodeUTF8 = Encoding.UTF8.GetBytes(chaveSecreta);
+            var chaveSimetrica = new SymmetricSecurityKey(encodeUTF8);
+
+            //ASSINATURA
+            var credenciais = new SigningCredentials(chaveSimetrica, SecurityAlgorithms.HmacSha256);
+
+            //TEMPO EXPIRAÇÃO
+            var dataExpiracao = DateTime.UtcNow.AddMinutes(15);
+
+            //GERA O TOKEN COMPLETO
+            JwtSecurityToken token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                signingCredentials: credenciais
+                );
+
+            var tokenJWT = new UserToken()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                Expiration = dataExpiracao
+            };
+            return tokenJWT;
         }
     }
 }
+
