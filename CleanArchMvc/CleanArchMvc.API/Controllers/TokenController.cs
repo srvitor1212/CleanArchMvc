@@ -1,6 +1,9 @@
 ﻿using CleanArchMvc.API.Models;
 using CleanArchMvc.Domain.Account;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace CleanArchMvc.API.Controllers
 {
@@ -9,11 +12,15 @@ namespace CleanArchMvc.API.Controllers
     public class TokenController : ControllerBase
     {
         private readonly IAuthenticate _authenticate;
+        private readonly IConfiguration _configuration;
 
-        public TokenController(IAuthenticate authenticate)
+        public TokenController(IAuthenticate authenticate, IConfiguration configuration)
         {
             _authenticate = authenticate ??
                 throw new ArgumentNullException(nameof(authenticate));
+
+            _configuration = configuration ?? 
+                throw new ArgumentNullException();
         }
 
         [HttpPost("LoginUser")]
@@ -31,6 +38,19 @@ namespace CleanArchMvc.API.Controllers
                     "Credenciais inválidas");
                 return BadRequest();
             }
+        }
+
+        private UserToken GenerateToken(LoginModel userInfo)
+        {
+            var claims = new[]
+            {
+                new Claim("email", userInfo.Email),
+                new Claim("empresa", "Minha Empresa LTDA"),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            //todo: parei aqui
+            //var chaveSecreta = new SymmetricSecurityKey()
         }
     }
 }

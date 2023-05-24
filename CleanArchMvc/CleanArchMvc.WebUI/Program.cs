@@ -24,7 +24,6 @@ app.UseRouting();
 
 // Para referenciar a interface "ISeedUserRoleInitial", use o código abaixo que irá obter  
 // o serviço da interface por uma duração limitada.
-//
 using (var serviceScope = app.Services.CreateScope())
 {
     var services = serviceScope.ServiceProvider;
