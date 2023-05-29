@@ -1,5 +1,6 @@
 ﻿using CleanArchMvc.API.Models;
 using CleanArchMvc.Domain.Account;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,6 +25,7 @@ namespace CleanArchMvc.API.Controllers
                 throw new ArgumentNullException();
         }
 
+        [AllowAnonymous]
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
         {
@@ -76,7 +78,7 @@ namespace CleanArchMvc.API.Controllers
             var credenciais = new SigningCredentials(chaveSimetrica, SecurityAlgorithms.HmacSha256);
 
             //TEMPO EXPIRAÇÃO
-            var dataExpiracao = DateTime.UtcNow.AddMinutes(15);
+            DateTime dataExpiracao = DateTime.UtcNow.AddMinutes(15);
 
             //GERA O TOKEN COMPLETO
             JwtSecurityToken token = new JwtSecurityToken(
@@ -86,6 +88,7 @@ namespace CleanArchMvc.API.Controllers
                 signingCredentials: credenciais
                 );
 
+            //todo ta retornando erro:  www-authenticate: Bearer error="invalid_token",error_description="The token has no expiration" 
             var tokenJWT = new UserToken()
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
