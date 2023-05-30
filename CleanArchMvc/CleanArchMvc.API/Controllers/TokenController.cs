@@ -85,6 +85,7 @@ namespace CleanArchMvc.API.Controllers
                 issuer: _configuration["Jwt:Issuer"],
                 audience: _configuration["Jwt:Audience"],
                 claims: claims,
+                expires: dataExpiracao,
                 signingCredentials: credenciais
                 );
 
