@@ -46,7 +46,7 @@ namespace CleanArchMvc.Infra.Data.Repositories
         public async Task<Category> UpdateAsync(Category category)
         {
             _context.Update(category);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return category;
         }
     }
